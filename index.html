@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Salty Voter!</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="lscache.js"></script>
+<script>
+  $(document).ready(function(){
+    var socket = io();
+    function loadPeople(people){
+        for (var person in people){
+          if(people.hasOwnProperty(person)){
+            $('body').append("<div class='salty_person'><p class='name'>"+person+"</p><p>Votes: "+people[person].votes+"</p></div>");
+          }
+	}
+	$('body').append("<div><span>Add new</span><input type='text' id='newname' name='newvote'><br><button id='submitbutton' type='button'>Vote new person</button></div");
+    }
+    function vote(person){
+ 	if(lscache.get("voted")){
+		alert("You can only vote once per hour");
+	}else{
+		socket.emit('vote',person);
+		lscache.set("voted","yes",60);
+	}
+    }
+    $('#submitbutton').click(function(){
+      console.log("triggered");
+      vote($('#newname').val());
+    });
+    $('.salty_person').on('click',function(){
+	var name = $(this).find('.name');
+	vote(name);
+    });
+    socket.on('vote',function(people){
+    	$('body').html('');
+	loadPeople(people);
+    });
+socket.emit('first load',"");
+    socket.on('load people',function(people){
+	loadPeople(people);
+    });
+//    socket.emit('first load',"");
+  });
+</script>
+  <body>
+    
+  </body>
+</html>
