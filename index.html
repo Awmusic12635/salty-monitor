@@ -44,7 +44,7 @@
 	    });
 	    
 		$('body').delegate('.salty_person','click',function(){
-			var name = $(this).find('.name');
+			var name = $(this).find('.name').text();
 			vote(name);
 	    });
 	    
