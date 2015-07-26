@@ -20,13 +20,14 @@
 	    var socket = io();
 	    
 	    function loadPeople(people){
-	        for (var person in people){
-	          if(people.hasOwnProperty(person)){
-	            $('body').append("<div class='salty_person'><p class='name'>"+person+"</p><p>Votes: "+people[person].votes+"</p></div>");
-	          }
+		    var person;
+			for (person in people){
+	        	if(people.hasOwnProperty(person)){
+					$('body').append("<div class='salty_person'><p class='name'>"+person+"</p><p>Votes: "+people[person].votes+"</p></div>");
+	          	}
 			}
 		
-		$('body').append("<div><span>Add new</span><input type='text' id='newname' name='newvote'><br><button id='submitbutton' type='button'>Vote new person</button></div>");
+			$('body').append("<div><span>Add new</span><input type='text' id='newname' name='newvote'><br><button id='submitbutton' type='button'>Vote new person</button></div>");
 	    }
 	    
 	    function vote(person){
@@ -38,23 +39,27 @@
 			}
 	    }
 	    
-	    $('#submitbutton').click(function(){
-	      console.log("triggered");
-	      vote($('#newname').val());
+	    //$('#submitbutton').click(function(){
+	    // 	console.log("triggered");
+		// 	vote($('#newname').val());
+	    //});
+	    $('body').delegate('#submitbutton','click',function(){
+			console.log("Clicked"); 
+			vote($('#newname').val());
 	    });
 	    
 	    $('.salty_person').on('click',function(){
-		var name = $(this).find('.name');
-		vote(name);
+			var name = $(this).find('.name');
+			vote(name);
 	    });
 	    
 	    socket.on('vote',function(people){
 	    	$('body').html('');
-		loadPeople(people);
+			loadPeople(people);
 	    });
 	    
 		socket.emit('first load',"");
-		
+		//loadPeople();
 	    socket.on('load people',function(people){
 			loadPeople(people);
 	    });
