@@ -40,11 +40,10 @@
 	    }
 	    
 	    $('body').delegate('#submitbutton','click',function(){
-			console.log("Clicked"); 
 			vote($('#newname').val());
 	    });
 	    
-	    $('.salty_person').on('click',function(){
+		$('body').delegate('.salty_person','click',function(){
 			var name = $(this).find('.name');
 			vote(name);
 	    });

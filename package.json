@@ -4,6 +4,7 @@
   "description": "Web application to monitor, vote and nominate people to rank their saltiness",
   "dependencies": {
     "express": "^4.10.2",
-    "socket.io": "^1.3.6"
+    "socket.io": "^1.3.6",
+    "node-persist":"^0.0.6"
   }
 }
