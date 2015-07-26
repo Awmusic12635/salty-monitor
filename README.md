@@ -7,7 +7,7 @@ via HTTP
 git clone https://github.com/Awmusic12635/salty-monitor.git
 
 via SSH (if you want to commit)
-git@github.com:Awmusic12635/salty-monitor.git
+git clone git@github.com:Awmusic12635/salty-monitor.git
 
 Install Dependencies
 npm install 
