@@ -39,10 +39,6 @@
 			}
 	    }
 	    
-	    //$('#submitbutton').click(function(){
-	    // 	console.log("triggered");
-		// 	vote($('#newname').val());
-	    //});
 	    $('body').delegate('#submitbutton','click',function(){
 			console.log("Clicked"); 
 			vote($('#newname').val());
@@ -59,7 +55,7 @@
 	    });
 	    
 		socket.emit('first load',"");
-		//loadPeople();
+
 	    socket.on('load people',function(people){
 			loadPeople(people);
 	    });
